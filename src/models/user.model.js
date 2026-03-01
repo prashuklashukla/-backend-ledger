@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrpty = require('bcryptjs')
 
 const userSchema = new mongoose.Schema({
     email:{
@@ -23,3 +24,20 @@ const userSchema = new mongoose.Schema({
 }, {
         timestamps: true
     })
+
+    userSchema.pre('save', async function (next) {
+        if(!this.isModified("password")){
+            return next()
+        }
+
+        const hash = await bcrpty.hash("password", 10)
+        this.password = hash
+        next()
+    })
+
+    userSchema.methods.comparePassword = async function (password) {
+        return await bcrpty.compare(password, this.password)
+    }
+
+    const UserModel = mongoose.model("User", userSchema)
+module.exports = UserModel       
