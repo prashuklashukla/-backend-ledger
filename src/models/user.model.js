@@ -20,7 +20,12 @@ const userSchema = new mongoose.Schema({
         minlength: [6, 'mim 6 letter is required to create a accout'],
         select: false
     },
-
+    systemUser: {
+        type: Boolean,
+        default: false,
+        immutable: true,
+        select: false
+    }
 }, {
     timestamps: true
 })

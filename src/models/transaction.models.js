@@ -30,6 +30,7 @@ const transactionSchema = new mongoose.Schema({
         required: [true, "Amount is required for creating a transaction"],
         min: [0, "Transaction amount cannot be negative"]
     },
+    // it do only once
     idempotencyKey: {
         type: String,
         required: [true, "Idempotency Key is required for creating a transaction"],
